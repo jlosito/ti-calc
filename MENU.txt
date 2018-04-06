@@ -1,0 +1,7 @@
+ClrHome
+Menu("SAMPLE MENU","OPTION 1",1,"OPTION 2",2)
+Lbl 1
+Disp "OPTION 1!"
+Stop
+Lbl 2
+Disp "OPTION 2!"

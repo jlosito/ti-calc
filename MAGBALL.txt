@@ -1,0 +1,12 @@
+ClrHome
+Disp "THINK OF YOUR"
+Disp "QUESTION"
+Disp "PRESS ENTER."
+Pause 
+randInt(0,2)→X
+"MAYBE"
+If X=1
+  "YES"
+If not(X)
+  "NO"
+Disp Ans

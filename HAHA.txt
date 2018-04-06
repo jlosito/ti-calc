@@ -1,0 +1,4 @@
+ClrHome
+Lbl O
+Disp "HA HA HA"
+Goto O

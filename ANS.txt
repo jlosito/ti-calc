@@ -1,0 +1,8 @@
+ClrHome
+Repeat Ans=21
+  getKey
+  If Ans
+    Disp "A KEY WAS PRESSED"
+  If not(Ans)
+    Disp "NO KEY PRESSED"
+End

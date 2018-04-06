@@ -1,0 +1,18 @@
+ClrHome
+randInt(1,1000)→N
+Disp "Guess a number"
+For(I,1,10,1)
+  Input "Guess?",G
+  If N=G:Then
+    Disp "You've got it!","Guesses:",I
+    Pause
+    Stop
+  Else
+    If N>G:Then
+      Disp "Higher…"
+    Else
+      Disp "Lower…"
+    End
+  End
+End
+Disp "You lose!","The number was:",N

@@ -1,0 +1,8 @@
+ClrHome
+SetUpEditor ʟLIST
+5→dim(ʟLIST)
+For(L,1,5)
+  2^L→ʟLIST(L)
+  Disp ʟLIST(L)
+End
+DelVar ʟLIST

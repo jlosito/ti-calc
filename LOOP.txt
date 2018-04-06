@@ -1,0 +1,16 @@
+ClrHome
+Disp "COUNTING UP WITH FOR"
+For(I,1,10,1)
+  Disp I
+End
+
+Disp "DELAY WITH FOR"
+For(I,1,100,1)
+End
+
+Disp "VALIDATE WITH REPEAT"
+DelVar X
+Repeat X>0
+  Disp "ENTER A POSITIVE"
+  Input "NUMBER?",X
+End

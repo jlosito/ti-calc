@@ -1,0 +1,10 @@
+ClrHome
+Disp "ENTER NUMBERS >0"
+Input "FIRST SIDE?",A
+Input "SECOND SIDE?",B
+If A>0 and B>0:Then
+  Disp "PERIMETER",2A+2B
+  Disp "Area",AB
+Else
+  Disp "BAD INPUT!"
+End

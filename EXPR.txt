@@ -1,0 +1,6 @@
+"A+B"→Str1
+5→A:4→B
+Disp expr(Str1)
+A+0.5B→B
+Disp expr(Str1)
+Disp Str1

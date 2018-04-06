@@ -1,0 +1,10 @@
+i(p,n)
+Func
+If n=0 Then
+Return 0
+ElseIf p=0 Then
+Return 0
+Else
+Return -p/(p+n)*log(p/(p+n),2)-n/(p+n)*log(n/(p+n),2)
+EndIf
+EndFunc

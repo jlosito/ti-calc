@@ -1,0 +1,7 @@
+Prompt P
+Prompt N
+If N=0 or P=0:Then
+  Disp 0
+Else
+  Disp (⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2))
+End

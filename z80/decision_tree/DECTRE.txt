@@ -1,0 +1,63 @@
+"DECISION TREE ALGO"
+"COMPUTE ENTROPY OF TOP"
+0→A
+Input "TOTAL P?",P
+Input "TOTAL N?",N
+If N=0 or P=0:Then
+  0→A
+Else
+  (⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2))→A
+End
+Disp "INFO GAIN TOP",A
+
+Input "NUM FEATURES?",F
+SetUpEditor ʟINFO
+F→dim(ʟINFO)
+
+"COMPUTE INFO GAIN OF EACH"
+For(I,1,F,1)
+  Disp "FEATURE",I
+  
+  Input "NUM CLASSES?",C
+  {C,3}→dim([A])
+
+  "WEIGHT"
+  0→T
+  
+  For(J,1,C,1)
+    Disp "CLASS",J
+    Prompt P
+    Prompt N
+  
+    P→[A](J,1)
+    N→[A](J,2)
+  
+    P+N+T→T
+  
+    If P=0 or N=0:Then
+      "PERFECT/NO ENTROPY"
+      0→[A](J,3)
+    Else
+      ⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2)→[A](J,3)
+    End
+    Disp "INFO",[A](J,3)
+  End
+
+  0→S
+  For(K,1,C,1)
+    S+(([A](K,1)+[A](K,2))/(T)*[A](K,3)→S
+  End
+
+  Disp "ENTROPY",S
+  A-S→ʟINFO(I)
+  Disp "INFO GAIN",ʟINFO(I)
+End
+
+0→M
+For(I,1,F,1)
+  If ʟINFO(I)>M:Then
+    I→M
+  End
+End
+
+Disp "MAX INFO GAIN",M

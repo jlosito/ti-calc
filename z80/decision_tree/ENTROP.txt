@@ -1,0 +1,30 @@
+"COMPUTES ENTROPY"
+Input "NUM CLASSES?",C
+
+{C,3}→dim([A])
+
+0→T
+For(I,1,C,1)
+  Disp "CLASS",I
+  Prompt P
+  Prompt N
+  
+  P→[A](I,1)
+  N→[A](I,2)
+  
+  P+N+T→T
+  
+  If P=0 or N=0:Then
+    "PERFECT/NO ENTROPY"
+    0→[A](I,3)
+  Else
+    ⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2)→[A](I,3)
+  End
+End
+
+0→S
+For(I,1,C,1)
+  S+(([A](I,1)+[A](I,2))/(T)*[A](I,3)→S
+End
+
+Disp "ENTROPY",S

@@ -1,0 +1,45 @@
+"KNN ALGO"
+Input "NUM TRAIN PTS?",P
+"LIST OF POINTS IN FORMAT X,Y,L"
+{P,3}→dim([A])
+
+"TRAINING DATA"
+For(I,1,P,1)
+  Disp "POINT",I
+  Prompt X
+  Prompt Y
+  Prompt L
+  X→[A](I,1)
+  Y→[A](I,2)
+  L→[A](I,3)
+End
+
+"CLASSIFY"
+Lbl 1
+Disp "TEST PT"
+Prompt X
+Prompt Y
+
+"CALC DISTANCES"
+SetUpEditor ʟDIST
+P→dim(ʟDIST)
+For(I,1,P,1)
+  √(([A](I,1)-X)^2+([A](I,2)-Y)^2)→ʟDIST(I)
+End
+
+For(I,1,P,1)
+  ClrHome
+  Output(1,1,"PT")
+  Output(1,4,I)
+  Pause 
+  Disp "X",[A](I,1)
+  Disp "Y",[A](I,2)
+  Disp "CLASS",[A](I,3)
+  Disp "DIST",ʟDIST(I)
+  Pause 
+End
+
+Input "ANOTHER?",F
+If F≠0:THEN
+  Goto 1
+End

@@ -1,0 +1,133 @@
+"KNN ALGO"
+Input "NUM TRAIN PTS?",P
+"LIST OF POINTS IN FORMAT X,Y,L"
+{P,3}→dim([A])
+
+"TRAINING DATA"
+Input "NUM CLASSES?",C
+SetUpEditor ʟCLASS
+C→dim(ʟCLASS)
+For(I,1,P,1)
+  Disp "POINT",I
+  Prompt X
+  Prompt Y
+  Prompt L
+  X→[A](I,1)
+  Y→[A](I,2)
+  L→[A](I,3)
+End
+
+"CLASSIFY"
+Lbl 1
+Disp "TEST PT"
+Prompt X
+Prompt Y
+
+"CALC DISTANCES"
+SetUpEditor ʟDIST
+P→dim(ʟDIST)
+SetUpEditor ʟPOS
+P→dim(ʟPOS)
+For(I,1,P,1)
+  √(([A](I,1)-X)^2+([A](I,2)-Y)^2)→ʟDIST(I)
+  I→ʟPOS(I)
+End
+
+"DISPLAY DISTANCES"
+For(I,1,P,1)
+  ClrHome
+  Output(1,1,"PT")
+  Output(1,4,I)
+  Output(2,1,"X=")
+  Output(2,3,[A](I,1))
+  Output(3,1,"Y=")
+  Output(3,3,[A](I,2))
+  Output(4,1,"LABEL=")
+  Output(4,7,[A](I,3))
+  Output(5,1,"DIST=")
+  Output(5,6,ʟDIST(I))
+  Pause 
+End
+ClrHome
+
+"SORT DISTANCES TO FIND K SMALLEST"
+"SELECTION SORT"
+For(I,1,P,1)
+  I→M
+  For(J,I+1,P,1)
+    If ʟDIST(M)>ʟDIST(J):Then
+      J→M
+    End
+  End
+  "SWAP"
+  ʟDIST(M)→V
+  ʟPOS(M)→B
+  ʟDIST(I)→ʟDIST(M)
+  ʟPOS(I)→ʟPOS(M)
+  V→ʟDIST(I)
+  B→ʟPOS(I)
+  End
+
+"DISPLAY K NEAREST"
+Output(1,1,"DISPLAYING K")
+Output(2,1,"NEAREST")
+Pause 
+ClrHome
+Prompt K
+"PRE-DICT"
+For(I,1,C,1)
+  0→ʟCLASS(I)
+End
+For(I,1,K,1)
+  ClrHome
+  Output(1,1,"NEAREST")
+  Output(1,9,I)
+  Output(2,1,"X=")
+  Output(2,3,[A](ʟPOS(I),1))
+  Output(3,1,"Y=")
+  Output(3,3,[A](ʟPOS(I),2))
+  Output(4,1,"LABEL=")
+  Output(4,7,[A](ʟPOS(I),3))
+  Output(5,1,"DIST=")
+  Output(5,6,ʟDIST(I))
+  Pause 
+  ʟCLASS([A](ʟPOS(I),3))+1→ʟCLASS([A](ʟPOS(I),3))
+End
+
+"FIND MAX CLASS"
+0→M
+0→J
+For(I,1,C,1)
+  If ʟCLASS(I)>M:Then
+    ʟCLASS(I)→M
+    I→J
+  End
+End
+
+"CHECK IF MULTIPLE ARE MAX"
+0→N
+For(I,1,C,1)
+  If ʟCLASS(I)=M:Then
+    N+1→N
+  End
+End
+
+"DISPLAY RESULTS"
+ClrHome
+Output(1,1,"TEST PT")
+Output(2,1,"X=")
+Output(2,3,X)
+Output(3,1,"Y=")
+Output(3,3,Y)
+If N>1:Then
+  Output(4,1,"CANNOT CLASSIFY")
+Else
+  Output(4,1,"CLASS=")
+  Output(4,7,J)
+End
+Pause 
+ClrHome
+Input "ANOTHER?",F
+If F≠0:Then
+  Goto 1
+End

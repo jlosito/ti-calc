@@ -1,0 +1,106 @@
+ClrHome
+Input "NUM TRAINING?",R
+Input "NUM FEATURES?",F
+
+"GET DIM OF EACH FEATURE"
+SetUpEditor ʟDIM
+F+1→dim(ʟDIM)
+ClrHome
+Output(1,1,"INPUT")
+Output(2,1,"DIMENSIONS")
+Output(3,1,"FOR EACH")
+Output(4,1,"FEATURE")
+Pause 
+ClrHome
+For(I,1,F,1)
+  Disp "FEATURE",I
+  Prompt D
+  D→ʟDIM(I)
+End
+Input "LABEL?",D
+D→ʟDIM(F+1)
+
+"TRAINING DATA"
+{R,F+1}→dim([A])
+ClrHome
+For(I,1,R,1)
+  Disp "PT",I
+  For(J,1,F,1)
+    Input "V?",V
+    V→[A](I,J)
+  End
+  Input "LABEL?",V
+  V→[A](I,F+1)
+End
+
+"FIND OUT HOW BIG TABLE IS"
+0→S
+"FIND MAX DIMENSION"
+For(I,1,F+1,1)
+  If ʟDIM(I)>S:Then
+    ʟDIM(I)→S
+  End
+End
+{F+1,S*ʟDIM(F+1)}→dim([B])
+
+"CALC PROBABILITIES"
+For(I,1,F,1)
+  "FOR EACH FEATURE"
+  0→C
+  For(J,1,ʟDIM(I),1)
+    "FOR EACH VALUE"
+
+    For(K,1,ʟDIM(F+1),1)
+      "FOR EACH LABEL"
+      C+1→C
+      0→N
+      0→D
+      For(L,1,R,1)
+        "CHECK THE RECORDS"
+        If [A](L,F+1)=K:Then
+          D+1→D
+          If [A](L,I)=J:Then
+            N+1→N
+          End
+        End
+      End
+      N/D→[B](F,C)
+      "DISPLAY TRAINING PROBABILITIES"
+      ClrHome
+      Output(1,1,"P(F")
+      Output(1,4,I)
+      Output(2,1,"=")
+      Output(2,2,J)
+      Output(3,1,"|")
+      Output(3,2,"L=")
+      Output(3,4,K)
+      Output(4,1,")=")
+      Output(4,3,N)
+      Output(4,6,"/")
+      Output(4,7,D)
+      Output(5,1,"=")
+      Output(5,2,[B](F,C))
+      Pause 
+    End
+  End
+End
+For(I,1,ʟDIM(F+1),1)
+  0→N
+  For(J,1,R,1)
+    If [A](J,F+1)=I:Then
+      N+1→N
+    End
+  End
+  N/R→[B](F+1,I)
+  ClrHome
+  Output(1,1,"P(")
+  Output(1,3,I)
+  Output(1,6,")")
+  Output(2,1,"=")
+  Output(2,2,N)
+  Output(2,5,"/")
+  Output(2,6,R)
+  Output(3,1,"=")
+  Output(3,2,[B](F+1,I))
+  Pause 
+End

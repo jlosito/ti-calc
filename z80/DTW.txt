@@ -1,0 +1,143 @@
+"DYNAMIC TIME WARPING ALGO"
+ClrHome
+Input "SIZE OF Q",M
+Input "SIZE OF C",N
+
+SetUpEditor ʟQ
+M→dim(ʟQ)
+SetUpEditor ʟC
+N→dim(ʟC)
+
+ClrHome
+Disp "ENTER VALUES"
+Disp "FOR Q"
+Pause 
+For(I,1,M,1)
+  Prompt V
+  V→ʟQ(I)
+End
+
+ClrHome
+Disp "ENTER VALUES"
+Disp "FOR C"
+Pause 
+For(I,1,N,1)
+  Prompt V
+  V→ʟC(I)
+End
+
+"CALC DISTANCES"
+{M,N}→dim([A])
+For(I,1,M,1)
+  For(J,1,N,1)
+    (ʟQ(I)-ʟC(J))^2→[A](I,J)
+    "DISPLAY DISTANCE"
+    ClrHome
+    Output(1,1,"X=")
+    Output(1,3,I)
+    Output(2,1,",Y=")
+    Output(2,4,J)
+    Output(3,1,"Qi=")
+    Output(3,4,ʟQ(i))
+    Output(4,1,"*Cj=")
+    Output(4,5,ʟC(J))
+    Output(5,1"=")
+    Output(5,2,[A](I,J))
+    Pause 
+  End
+End
+
+"GAMMA"
+{M+1,N+1}→dim([B])
+
+ClrHome
+Output(1,1,"DISPLAYING")
+Output(2,1,"GAMMA…")
+Pause 
+"BASE CASES"
+0→[B](1,1)
+ClrHome
+Output(1,1,"X=")
+Output(1,3,1)
+Output(2,1,"Y=")
+Output(2,3,1)
+Output(3,1,"=")
+Output(3,2,[B](1,1))
+Pause 
+For(I,2,N+1,1)
+  1ᴇ99→[B](1,I)
+  ClrHome
+  Output(1,1,"X=")
+  Output(1,3,1)
+  Output(2,1,"Y=")
+  Output(2,3,I)
+  Output(3,1,"=")
+  Output(3,2,[B](1,I))
+  Pause 
+End
+For(I,2,M+1,1)
+  1ᴇ99→[B](I,1)
+  ClrHome
+  Output(1,1,"X=")
+  Output(1,3,I)
+  Output(2,1,"Y=")
+  Output(2,3,1)
+  Output(3,1,"=")
+  Output(3,2,[B](I,1))
+  Pause 
+End
+
+"CALC GAMMA"
+For(I,2,M+1,1)
+  For(J,2,N+1,1)
+    "FIND MIN OF NEIGHBORS"
+    [B](I-1,J)→G
+    If [B](I-1,J-1)<G:Then
+      [B](I-1,J-1)→G
+    End
+    If [B](I,J-1)<G:Then
+      [B](I,J-1)→G
+    End
+    
+    [A](I-1,J-1)+G→[B](I,J)
+    "DISPLAY RESULT"
+    ClrHome
+    Output(1,1,"X=")
+    Output(1,3,)
+    Output(2,1,"Y=")
+    Output(2,3,)
+    Output(3,1,"=")
+    Output(3,2,[B](I,J))
+    Pause 
+  End
+End
+
+"BACKTRACK"
+ClrHome
+Disp "BACKTRACKING…"
+Pause 
+M+1→X
+N+1→Y
+[B](X,Y)→F
+While X≠1 and Y≠1
+  ClrHome
+  Output(1,1,"X=")
+  Output(1,3,X)
+  Output(2,1,"Y=")
+  Output(2,3,Y)
+  Output(3,1,"=")
+  Output(3,2,F)
+  Pause 
+  
+  "FIND MIN NEIGHBORS"
+  X-1→X
+  [B](X,Y)→B
+  If [B](X,Y-1)<B:Then
+    Y-1→Y
+    [B](X,Y)→B
+  End
+  If [B](X+1,Y)<B:Then
+    X+1→X
+    [B](X,Y)→B
+  End
+End

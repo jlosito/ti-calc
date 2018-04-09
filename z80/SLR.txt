@@ -1,0 +1,100 @@
+"SIMPLE LINEAR REGRESSION"
+ClrHome
+Input "NUM TRAINING?",D
+SetUpEditor ʟX
+D→dim(ʟX)
+SetUpEditor ʟY
+D→dim(ʟY)
+
+"TRAINING DATA"
+For(I,1,D,1)
+  ClrHome
+  Disp "ENTER PT",I
+  Prompt X
+  Prompt Y
+  X→ʟX(I)
+  Y→ʟY(I)
+End
+
+"ΣX"
+0→A
+"ΣX^2"
+0→C
+"ΣY"
+0→E
+"ΣYX"
+0→F
+For(I,1,D,1)
+  "ΣX"
+  A+ʟX(I)→A
+  "ΣX^2"
+  C+ʟX(I)^2→C
+  "ΣY"
+  E+ʟY(I)→E
+  "ΣYX"
+  F+ʟX(I)*ʟY(I)→F
+End
+
+
+"DISPLAY ITER VALS"
+ClrHome
+Output(1,1,"ΣX=")
+Output(1,4,A)
+Output(2,1,"ΣX^2=")
+Output(2,6,C)
+Output(3,1,"ΣY=")
+Output(3,4,E)
+Output(4,1,"ΣYX=")
+Output(4,5,F)
+Pause 
+
+"DISPLAY REGRESS FORM"
+ClrHome
+Output(1,1,"DISPLAYING")
+Output(2,1,"REGRESION FORMS")
+Output(3,1,"WHERE D=DATA SIZE")
+Pause 
+"DISPLAY SLOPE FORM"
+ClrHome
+Output(1,1,"M=")
+Output(2,1,"ΣYX-(ΣY*ΣX)/D")
+Output(3,1,"---------")
+Output(4,1,"ΣX^2-((ΣX)^2)/D)")
+Pause 
+"DISPLAY INTERCEPT"
+ClrHome
+Output(1,1,"B=")
+Output(2,1,"(1/D)*ΣY")
+Output(3,1,"-(M/D)*ΣX")
+Pause 
+
+"CALC REGRESS LINE"
+(F-E*A/D)/(C-(A^2)/D)→M
+1/D*E-M/D*A→B
+
+"DISPLAY REGRESS LINE"
+ClrHome
+Output(1,1,"Y=")
+Output(2,1,"X*")
+Output(2,3,M)
+Output(3,1,"+")
+Output(3,2,B)
+Pause 
+
+"TEST"
+Lbl 0
+ClrHome
+Input "TEST X=",T
+
+"PRE-DICT"
+ClrHome
+Output(1,1,"Y=")
+Output(2,1,T)
+Output(3,1,"*")
+Output(3,2,M)
+Output(4,1,"+")
+Output(4,2,B)
+Output(5,1,"=")
+Output(5,2,M*T+B)
+Pause 
+Goto 0

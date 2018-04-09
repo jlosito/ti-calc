@@ -120,22 +120,26 @@ End
 "PRE-DICT"
 0→Z
 ClrHome
+Disp "PRESS KEY TO"
+Disp "CALC PROBS…"
+Pause 
 For(I,1,ʟDIM(F+1),1)
   "FOR EACH LABEL"
-  [B](F+1,I)→X
   ClrHome
-  Output(1,1,[B](F+1,I))
+  Disp "CLASS",I
+  [B](F+1,I)→X
+  Disp "PROB",[B](F+1,I)
   Pause 
   For(J,1,F,1)
     "CALC PROB"
     X*[B](J,(ʟTEST(J)-1)*ʟDIM(F+1)+I)→X
-    ClrHome
-    Output(1,1,[B](J,(ʟTEST(J)-1)*ʟDIM(F+1)+I))
+    Disp "PROB",[B](J,(ʟTEST(J)-1)*ʟDIM(F+1)+I)
     Pause 
   End
+  Disp "TOTAL",X
+  Pause 
   "CHECK IF HIGHER PROB"
   If X>ʟTEST(F+1):Then
-    Disp "CHANGING"
     I→Z
     X→ʟTEST(F+1)
   End

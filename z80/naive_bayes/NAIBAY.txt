@@ -64,7 +64,7 @@ For(I,1,F,1)
           End
         End
       End
-      N/D→[B](F,C)
+      N/D→[B](I,C)
       "DISPLAY TRAINING PROBABILITIES"
       ClrHome
       Output(1,1,"P(F")
@@ -79,7 +79,7 @@ For(I,1,F,1)
       Output(4,6,"/")
       Output(4,7,D)
       Output(5,1,"=")
-      Output(5,2,[B](F,C))
+      Output(5,2,[B](I,C))
       Pause 
     End
   End
@@ -104,3 +104,49 @@ For(I,1,ʟDIM(F+1),1)
   Output(3,2,[B](F+1,I))
   Pause 
 End
+
+"TEST DATA"
+Lbl 0
+SetUpEditor ʟTEST
+F+1→dim(ʟTEST)
+ClrHome
+Disp "INPUT TEST"
+For(I,1,F,1)
+  Prompt V
+  V→ʟTEST(I)
+End
+0→ʟTEST(F+1)
+
+"PRE-DICT"
+0→Z
+ClrHome
+For(I,1,ʟDIM(F+1),1)
+  "FOR EACH LABEL"
+  [B](F+1,I)→X
+  ClrHome
+  Output(1,1,[B](F+1,I))
+  Pause 
+  For(J,1,F,1)
+    "CALC PROB"
+    X*[B](J,(ʟTEST(J)-1)*ʟDIM(F+1)+I)→X
+    ClrHome
+    Output(1,1,[B](J,(ʟTEST(J)-1)*ʟDIM(F+1)+I))
+    Pause 
+  End
+  "CHECK IF HIGHER PROB"
+  If X>ʟTEST(F+1):Then
+    Disp "CHANGING"
+    I→Z
+    X→ʟTEST(F+1)
+  End
+End
+
+"DISPLAY RESULTS"
+ClrHome
+Output(1,1,"PRE-DICT")
+Output(2,1,"CLASS=")
+Output(2,7,Z)
+Output(3,1,"=")
+Output(3,2,ʟTEST(F+1))
+Pause 
+Goto 0

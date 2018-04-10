@@ -1,0 +1,136 @@
+"EVAL CLASSIFIER"
+ClrHome
+"TP"
+Disp "NUM TRUE POS?"
+Input "TP?",A
+
+"TN"
+Disp "NUM TRUE NEG?"
+Input "TN?",B
+
+"FP"
+Disp "NUM FALSE POS?"
+Input "FP?",C
+
+"FN"
+Disp "NUM FALSE NEG?"
+Input "FN?",D
+
+"DISPLAY RESULTS"
+"DISPLAY P"
+ClrHome
+Output(1,1,"NUM OF")
+Output(2,1,"POSITIVE")
+Output(3,1,"EXAMPLES")
+Output(4,1,"=P")
+Output(5,1,"=TP+FN")
+Output(6,1,"=")
+Output(6,2,A+D)
+Pause 
+
+"DISPLAY N"
+ClrHome
+Output(1,1,"NUM OF")
+Output(2,1,"NEGATIVE")
+Output(3,1,"EXAMPLES")
+Output(4,1,"=N")
+Output(5,1,"=TN+FP")
+Output(6,1,"=")
+Output(6,2,B+C)
+Pause 
+
+"DISPLAY TPR"
+ClrHome
+Output(1,1,"TRUE POS RATE")
+Output(2,1,"=TPR")
+Output(3,1,"=TP/(TP+FN)")
+Output(4,1,"=TP/P")
+Output(5,1,"=")
+Output(5,2,A/(A+D))
+Pause 
+
+"DISPLAY TNR"
+ClrHome
+Output(1,1,"TRUE NEG RATE")
+Output(2,1,"=TNR")
+Output(3,1,"=TN/(TN+FP)")
+Output(4,1,"=TN/N")
+Output(5,1,"=")
+Output(5,2,B/(B+C))
+Pause 
+
+"DISPLAY FPR"
+ClrHome
+Output(1,1,"FALSE POS RATE")
+Output(2,1,"=FPR")
+Output(3,1,"=FP/(TN+FP)")
+Output(4,1,"=FP/N")
+Output(5,1,"=")
+Output(5,2,C/(B+C))
+Pause 
+
+"DISPLAY FNR"
+ClrHome
+Output(1,1,"FALSE NEG RATE")
+Output(2,1,"=FNR")
+Output(3,1,"=FN/(TP+FN)")
+Output(4,1,"=FN/P")
+Output(5,1,"=")
+Output(5,2,D/(A+D))
+Pause 
+
+"DISPLAY RECALL/SENSITIVITY"
+ClrHome
+Output(1,1,"RECALL AKA")
+Output(2,1,"SENSITIVITY")
+Output(3,1,"=LOWER CASE R")
+Output(4,1,"=TP/(TP+FN)")
+Output(5,1,"=TP/P")
+Output(6,1,"=")
+Output(6,2,A/(A+D))
+Pause 
+
+"DISPLAY PRECISION"
+ClrHome
+Output(1,1,"PRECISION")
+Output(2,1,"=LOWER CASE P")
+Output(3,1,"=TP/(TP+FP)")
+Output(4,1,"=")
+Output(4,2,A/(A+C))
+Pause 
+
+"DISPLAY F1 MEASURE"
+ClrHome
+Output(1,1,"F1 MEASURE")
+Output(2,1,"=F1")
+Output(3,1,"=(2*TP)")
+Output(4,1,"/(2*TP+FP+FN)")
+Output(5,1,"=2*(LOWER (P*R))")
+Output(6,1,"/(LOWER (P+R))")
+Output(7,1,"=")
+Output(7,2,(2*A)/(2*A+C+D))
+Pause 
+
+"DISPLAY ACCURACY"
+ClrHome
+Output(1,1,"ACCURACY")
+Output(2,1,"=ACC")
+Output(3,1,"=(TP+TN)")
+Output(4,1,"/(TP+FP+FN+TN)")
+Output(5,1,"=(TP+TN)/(P+N)")
+Output(6,1,"=")
+Output(6,2,(A+B)/(A+C+D+B))
+Pause 
+
+"DISPLAY ERROR RATE"
+ClrHome
+Output(1,1,"ERROR RATE")
+Output(2,1,"=ERR")
+Output(3,1,"=(FP+FN)")
+Output(4,1,"/(TP+FP+FN+TN)")
+Output(5,1,"=(FP+FN)/(P+N)")
+Output(6,1,"=")
+Output(6,2,(C+D)/(A+C+D+B))
+Pause 
+
+ClrHome

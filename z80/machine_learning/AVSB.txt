@@ -1,0 +1,18 @@
+"COMPARE CLASSIFIERS"
+ClrHome
+Input "AUC 1=",A
+Input "AUC 2=",B
+
+Output(3,1,"A")
+If A=B:Then
+  Output(3,2,"=")
+End
+If A>B:Then
+  Output(3,2,">")
+End
+If A<B:Then
+  Output(3,2,"<")
+End
+Output(3,3,"B")
+Pause 
+ClrHome

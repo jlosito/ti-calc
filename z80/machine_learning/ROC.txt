@@ -1,0 +1,146 @@
+"RECEIVER OPERATING CHARACTERISTIC (ROC)"
+ClrHome
+Input "NUM OF TEST?",N
+
+SetUpEditor ʟDATA
+N→dim(ʟDATA)
+SetUpEditor ʟLAB
+N→dim(ʟLAB)
+
+"TEST DATA"
+ClrHome
+Output(1,1,"ENTER DATA")
+Output(2,1,"AND LABEL")
+Output(3,1,"0 FOR FALSE")
+Output(4,1,"1 FOR TRUE")
+Pause 
+For(I,1,N,1)
+  ClrHome
+  Disp "RECORD",I
+  Prompt V
+  V→ʟDATA(I)
+  Prompt V
+  V→ʟLAB(I)
+End
+
+"SORT"
+"SELECTION SORT"
+For(I,1,N,1)
+  I→M
+  "FIND MIN"
+  For(J,I+1,N,1)
+    If ʟDATA(J)<ʟDATA(M):Then
+      J→M
+    End
+  End
+  "SWAP"
+  ʟDATA(M)→T
+  ʟLAB(M)→L
+  ʟDATA(I)→ʟDATA(M)
+  ʟLAB(I)→ʟLAB(M)
+  T→ʟDATA(I)
+  L→ʟLAB(I)
+End
+
+"DISPLAY SORTED DATA"
+ClrHome
+Output(1,1,"DISPLAYING")
+Output(2,1,"SORTED")
+Output(3,1,"DATA")
+Pause 
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,"LABEL")
+  Output(2,1,"=")
+  Output(2,2,ʟLAB(I))
+  Output(3,1,"DATA")
+  Output(4,1,"=")
+  Output(4,2,ʟDATA(I))
+  Pause 
+End
+
+SetUpEditor ʟTPR
+N+1→dim(ʟTPR)
+SetUpEditor ʟFPR
+N+1→dim(ʟFPR)
+For(I,1,N+1,1)
+  "METRICS"
+  "TP"
+  0→A
+  
+  "FP"
+  0→B
+  
+  "TN"
+  0→C
+  
+  "FN"
+  0→D
+  
+  "RELABEL"
+  For(J,1,N,1)
+    If J<I:Then
+      "RELABEL NEGATIVE"
+      If ʟLAB(J)=0:Then
+        "CORRECT"
+        C+1→C
+      Else
+        "WRONG"
+        D+1→D
+      End
+    End
+    If J≥I:Then
+      "RELABEL POSITIVE"
+      If ʟLAB(J)=1:Then
+        "CORRECT"
+        A+1→A
+      Else
+        "WRONG"
+        B+1→B
+      End
+    End
+  End
+  "TPR"
+  A/(A+D)→ʟTPR(I)
+  "FPR"
+  B/(C+B)→ʟFPR(I)
+    
+  "DISPLAY RESULTS"
+  ClrHome
+  Output(1,1,"TP=")
+  Output(1,4,A)
+  Output(2,1,"FP=")
+  Output(2,4,B)
+  Output(3,1,"TN=")
+  Output(3,4,C)
+  Output(4,1,"FN=")
+  Output(4,4,D)
+  Output(5,1,"TPR=")
+  Output(5,5,ʟTPR(I))
+  Output(6,1,"FPR=")
+  Output(6,5,ʟFPR(I))
+  Pause 
+End
+
+ClrHome
+Output(1,1,"PLOT")
+Output(2,1,"X=FPR")
+Output(3,1,"Y=TPR")
+Pause 
+
+"CALC AREA UNDER CURVE"
+0→S
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,ʟFPR(I)-ʟFPR(I+1))
+  Output(2,1,ʟTPR(I))
+  Pause 
+  S+(ʟFPR(I)-ʟFPR(I+1))*ʟTPR(I)→S
+End
+ClrHome
+Output(1,1,"AREA")
+Output(2,1,"UNDER")
+Output(3,1,"CURVE")
+Output(4,1,S)
+Pause 
+ClrHome

@@ -1,7 +1,33 @@
-Prompt P
-Prompt N
-If N=0 or P=0:Then
-  Disp 0
-Else
-  Disp (⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2))
+"CALC INFO"
+ClrHome
+Input "NUM OF LABELS?",C
+
+SetUpEditor ʟINFO
+C→dim(ʟINFO)
+
+"FIND HOW MUCH IN EACH LABEL"
+For(I,1,C,1)
+  ClrHome
+  Output(1,1,"LABEL")
+  Output(2,1,I)
+  Pause 
+  
+  ClrHome
+  Input "NUM IN LABEL?",X
+  X→ʟINFO(I)
 End
+
+"CALC TOTAL ITEMS"
+sum(ʟINFO)→T
+
+0→Z
+For(I,1,C,1)
+  If ʟINFO(I)≠0:Then
+  Z-(ʟINFO(I)/T)*log(ʟINFO(I)/T,2)→Z
+  End
+End
+
+Disp "INFO",Z
+
+"CLEAN UP"
+DelVar ʟINFO

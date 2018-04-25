@@ -1,4 +1,5 @@
 "COMPUTES ENTROPY"
+ClrHome
 Input "NUM CLASSES?",C
 
 {C,3}→dim([A])

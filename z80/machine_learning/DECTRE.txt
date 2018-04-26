@@ -1,63 +1,199 @@
 "DECISION TREE ALGO"
-"COMPUTE ENTROPY OF TOP"
-0→A
-Input "TOTAL P?",P
-Input "TOTAL N?",N
-If N=0 or P=0:Then
-  0→A
-Else
-  (⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2))→A
-End
-Disp "INFO GAIN TOP",A
 
+ClrHome
+Input "NUM LABELS?",L
+
+SetUpEditor ʟPROP
+L→dim(ʟPROP)
+
+"GET NUM IN EACH LABEL"
+For(I,1,L,1)
+  ClrHome
+  Output(1,1,"NUM IN")
+  Output(2,1,"LABEL")
+  Output(2,7,I)
+  Pause 
+  
+  ClrHome
+  Prompt P
+  
+  P→ʟPROP(I)
+End
+
+"TOTAL ITEMS"
+sum(ʟPROP)→T
+
+"DISPLAY TOTAL ITEMS"
+ClrHome
+Output(1,1,"TOTAL")
+Output(2,1,"NUMBER OF")
+Output(3,1,"RECORDS")
+Output(4,1,"T=")
+Output(4,3,T)
+Pause 
+
+"COMPUTE INFO OF TOP"
+0→A
+For(I,1,L,1)
+  If ʟPROP(I)≠0:Then
+    A-(ʟPROP(I)/T)*log(ʟPROP(I)/T,2)→A
+  End
+End
+
+"DISPLAY INFO OF PARENT"
+ClrHome
+Disp "INFO GAIN TOP",A
+Pause 
+
+ClrHome
 Input "NUM FEATURES?",F
+
 SetUpEditor ʟINFO
 F→dim(ʟINFO)
 
 "COMPUTE INFO GAIN OF EACH"
 For(I,1,F,1)
-  Disp "FEATURE",I
+  ClrHome
+  Output(1,1,"ENTER DATA")
+  Output(2,1,"FOR FEATURE")
+  Output(3,1,I)
+  Pause 
   
+  ClrHome
+  Output(1,1,"ENTER NUM")
+  Output(2,1,"OF CLASSES")
+  Output(3,1,"IN FEATURE")
+  Output(4,1,I)
+  Pause 
+  
+  "GET NUM OF CLASSES IN FEATURE"
+  ClrHome
   Input "NUM CLASSES?",C
-  {C,3}→dim([A])
-
-  "WEIGHT"
-  0→T
+  {C,L+1}→dim([A])
   
+  "TOTAL ITEMS IN CLASS"
+  SetUpEditor ʟWEI
+  C→dim(ʟWEI)
+  
+  "FIND PROP IN EACH CLASS"
   For(J,1,C,1)
-    Disp "CLASS",J
-    Prompt P
-    Prompt N
+    0→ʟWEI(J)
   
-    P→[A](J,1)
-    N→[A](J,2)
-  
-    P+N+T→T
-  
-    If P=0 or N=0:Then
-      "PERFECT/NO ENTROPY"
-      0→[A](J,3)
-    Else
-      ⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2)→[A](J,3)
+    ClrHome
+    Output(1,1,"ENTER NUM")
+    Output(2,1,"DATA FOR")
+    Output(3,1,"CLASS")
+    Output(4,1,J)
+    Pause 
+    
+    "FIND PROPORTIONS"
+    For(K,1,L,1)
+      ClrHome
+      Output(1,1,"ENTER NUM")
+      Output(2,1,"OF ITEMS")
+      Output(3,1,"IN LABEL")
+      Output(4,1,"L=")
+      Output(4,3,K)
+      Output(5,1,"FOR CLASS")
+      Output(6,1,"C=")
+      Output(6,3,J)
+      Pause 
+      
+      ClrHome
+      Prompt P
+      P→[A](J,K)
+      
+      "ADD ITEMS TO TOTAL"
+      ʟWEI(J)+P→ʟWEI(J)
     End
-    Disp "INFO",[A](J,3)
+    
+    "CALC INFO"
+    0→[A](J,L+1)
+    For(K,1,L,1)
+      If [A](J,K)≠0:Then
+      [A](J,L+1)-([A](J,K)/ʟWEI(J))*log([A](J,K)/ʟWEI(J),2)→[A](J,L+1)
+      End
+    End
+    
+    "DISPLAY INFO FOR CLASS"
+    ClrHome
+    Output(1,1,"INFO FOR")
+    Output(2,1,"CLASS")
+    Output(3,1,"C=")
+    Output(3,3,J)
+    Output(4,1,"IN FEATURE")
+    Output(5,1,"F=")
+    Output(5,3,I)
+    Output(6,1,"INFO=")
+    Output(7,1,[A](J,L+1))
+    Pause 
   End
-
+  
+  "CALC ENTROP"
   0→S
-  For(K,1,C,1)
-    S+(([A](K,1)+[A](K,2))/(T)*[A](K,3)→S
+  For(J,1,C,1)
+    "DISPLAY WEIGHTS"
+    ClrHome
+    Output(1,1,"THE NUMBER")
+    Output(2,1,"OF ITEMS IN")
+    Output(3,1,"CLASS C=")
+    Output(3,9,J)
+    Output(4,1,"IS")
+    Output(5,1,"N=")
+    Output(5,3,ʟWEI(J))
+    Pause 
+    
+    S+(ʟWEI(J)/T)*[A](J,L+1)→S
   End
 
-  Disp "ENTROPY",S
+  "DISPLAY ENTROP FOR FEATURE"\
+  ClrHome
+  Output(1,1,"FEATURE")
+  Output(2,1,"F=")
+  Output(2,3,I)
+  Output(3,1,"HAS")
+  Output(4,1,"ENTROPY")
+  Output(5,1,"E=")
+  Output(5,3,S)
+  Pause 
+  
+  "DISPLAY INFO GAIN FOR FEATURE"
   A-S→ʟINFO(I)
-  Disp "INFO GAIN",ʟINFO(I)
+  ClrHome
+  Output(1,1,"FEATURE")
+  Output(2,1,"F=")
+  Output(2,3,I)
+  Output(3,1,"HAS")
+  Output(4,1,"INFO GAIN")
+  Output(5,1,"G=")
+  Output(5,3,ʟINFO(I))
+  Pause 
 End
 
+"FIND WHICH FEATURE HAS GREATEST INFO GAIN"
 0→M
+0→Z
 For(I,1,F,1)
   If ʟINFO(I)>M:Then
-    I→M
+    ʟINFO(I)→M
+    I→Z
   End
 End
 
-Disp "MAX INFO GAIN",M
+"DISPLAY GREATEST INFO GAIN"
+ClrHome
+Output(1,1,"FEATURE")
+Output(2,1,"F=")
+Output(2,3,Z)
+Output(3,1,"HAS")
+Output(4,1,"MAX INFO GAIN")
+Output(5,1,"G=")
+Output(5,3,M)
+Pause 
+
+"CLEAN UP"
+DelVar ʟPROP
+DelVar ʟINFO
+DelVar ʟWEI
+
+ClrHome

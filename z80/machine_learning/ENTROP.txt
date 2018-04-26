@@ -1,31 +1,66 @@
 "COMPUTES ENTROPY"
 ClrHome
+Input "NUM OF LABELS?",L
 Input "NUM CLASSES?",C
 
-{C,3}→dim([A])
+{C,L+1}→dim([A])
 
+"TOTAL ITEMS"
 0→T
+
 For(I,1,C,1)
-  Disp "CLASS",I
-  Prompt P
-  Prompt N
+  ClrHome
+  Output(1,1,"ENTER INFO")
+  Output(2,1,"FOR CLASS")
+  Output(3,1,I)
+  Pause 
   
-  P→[A](I,1)
-  N→[A](I,2)
+  "TOTAL ITEMS FOR CLASS"
+  0→A
   
-  P+N+T→T
+  For(J,1,L,1)
+    ClrHome
+    Output(1,1,"ENTER NUMBER")
+    Output(2,1,"OF LABEL")
+    Output(3,1,J)
+    Pause 
   
-  If P=0 or N=0:Then
-    "PERFECT/NO ENTROPY"
-    0→[A](I,3)
-  Else
-    ⁻P/(P+N)*log(P/(P+N),2)-N/(P+N)*log(N/(P+N),2)→[A](I,3)
+    "GET AMOUNT IN LABEL"
+    ClrHome
+    Prompt X
+    X→[A](I,J)
+    
+    "ADD ITEMS TO TOTAL"
+    T+X→T
+    A+X→A
   End
+  
+  "CALC I FORMULA"
+  0→G
+  For(J,1,L,1)
+    If [A](I,J)≠0:Then
+      G-([A](I,J)/A)*log([A](I,J)/A,2)→G
+    End
+  End
+  G→[A](I,L+1)
+  
+  ClrHome
+  Output(1,1,"CLASS")
+  Output(2,1,I)
+  Output(3,1,"INFO")
+  Output(4,1,G)
+  Pause 
 End
 
+"CALC ENTROP"
 0→S
 For(I,1,C,1)
-  S+(([A](I,1)+[A](I,2))/(T)*[A](I,3)→S
+  0→A
+  For(J,1,L,1)
+    A+[A](I,J)→A
+  End
+  S+(A/T)*[A](I,L+1)→S
 End
 
+ClrHome
 Disp "ENTROPY",S

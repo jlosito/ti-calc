@@ -1,16 +1,18 @@
+"CALC UNCERTAINTY"
 ClrHome
 Output(1,1,"INFO OF PARENT?")
 Pause 
 
 ClrHome
-Input "I?",I
+Prompt I
 
 ClrHome
 Output(1,1,"ENTROP OF CHILD?")
 Pause 
 
 ClrHome
-Input "E?",E
+Prompt E
 
 ClrHome
-Disp "INFO GAIN",I-E
+(I-E)/I→U
+Disp "UNCERTAINTY",U

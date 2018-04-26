@@ -1,0 +1,94 @@
+"CALC PURITY"
+"PURITY"
+0→P
+"TOTAL NUM ITEMS"
+0→T
+
+"GET NUM CLUSTERS"
+ClrHome
+Input "NUM CLUSTERS?",C
+
+"GET NUM LABELS"
+ClrHome
+Input "NUM LABELS?",L
+
+{C,L}→dim([A])
+For(I,1,C,1)
+  For(J,1,L,1)
+    0→[A](I,J)
+  End
+End
+
+For(I,1,C,1)
+  "GET NUM ITEMS IN CLUSTER"
+  ClrHome
+  Output(1,1,"ENTER NUM")
+  Output(2,1,"OF ITEMS IN")
+  Output(3,1,"CLUSTER")
+  Output(4,1,"C=")
+  Output(4,3,I)
+  Pause 
+  
+  ClrHome
+  Prompt N
+  T+N→T
+  
+  For(J,1,N,1)
+    "GET LABEL FOR POINT IN CLUSTER"
+    ClrHome
+    Output(1,1,"ENTER LABEL")
+    Output(2,1,"FOR POINT")
+    Output(3,1,"P=")
+    Output(3,3,J)
+    Output(4,1,"IN CLUSTER")
+    Output(5,1,"C=")
+    Output(5,3,I)
+    Pause 
+    
+    ClrHome
+    Prompt S
+    
+    [A](I,S)+1→[A](I,S)
+  End
+
+  "FIND MAJOIRTY OF CLUSTER"
+  0→Q
+  0→M
+  For(J,1,L,1)
+    If [A](I,J)>M:Then
+      [A](I,J)→M
+      J→Q
+    End
+  End
+  
+  "DISPLAY MAJORITY IN CLUSTER"
+  ClrHome
+  Output(1,1,"THE MAJORITY")
+  Output(2,1,"CLASS IN CLUSTER")
+  Output(3,1,"C=")
+  Output(3,3,I)
+  Output(4,1,"IS LABEL")
+  Output(5,1,"L=")
+  Output(5,3,Q)
+  Output(6,1,"WITH NUM")
+  Output(7,1,"N=")
+  Output(7,3,M)
+  Pause 
+  
+  P+M→P
+End
+
+P/T→P
+
+"DISPLAY PURITY"
+ClrHome
+Output(1,1,"BAD CLUS P=0")
+Output(2,1,"PERF CLUS P=1")
+Output(3,1,"YOUR CLUSTER")
+Output(4,1,"P=")
+Output(4,3,P)
+Pause 
+
+"CLEAN UP"
+
+ClrHome

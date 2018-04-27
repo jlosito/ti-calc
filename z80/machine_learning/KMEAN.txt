@@ -1,0 +1,182 @@
+"K-MEANS ALGO"
+ClrHome
+Input "NUM POINTS?",P
+Input "NUM CLUSTERS?",Q
+
+"COORDINATES OF POINTS"
+{P,2}→dim([A])
+
+"WHICH CLUSTER POINT IS IN"
+SetUpEditor ʟCLUS
+P→dim(ʟCLUS)
+SetUpEditor ʟNEWC
+P→dim(ʟNEWC)
+
+"POINT OF CENTER CLUSTER"
+{Q,2}→dim([B])
+
+"DIST FROM POINT TO CENTER OF CLUSTER"
+{P,Q}→dim([C])
+
+For(I,1,P,1)
+  "GET COORDINATES OF POINTS"
+  ClrHome
+  Output(1,1,"ENTER COORD")
+  Output(2,1,"FOR POINT")
+  Output(3,1,"P=")
+  Output(3,3,I)
+  Pause 
+  
+  ClrHome
+  Prompt X
+  Prompt Y
+  X→[A](I,1)
+  Y→[A](I,2)
+
+  "ASSIGN POINTS TO CLUSTER"
+  ClrHome
+  Output(1,1,"ASSIGN PT")
+  Output(2,1,"P=")
+  Output(2,3,I)
+  Output(3,1,"TO A CLUSTER")
+  Pause 
+  
+  ClrHome
+  Prompt C
+  C→ʟCLUS(I)
+End
+
+Lbl 0
+
+"CALC CENTER"
+For(I,1,Q,1)
+  0→[B](I,1)
+  0→[B](I,2)
+  0→A
+  For(J,1,P,1)
+    If ʟCLUS(J)=I:Then
+      [B](I,1)+[A](J,1)→[B](I,1)
+      [B](I,2)+[A](J,2)→[B](I,2)
+      A+1→A
+    End
+  End
+  [B](I,1)/A→[B](I,1)
+  [B](I,2)/A→[B](I,2)
+  
+  "DISPLAY NUMBER OF POINTS IN CLUSTER"
+  ClrHome
+  Output(1,1,"CLUSTER")
+  Output(2,1,"C=")
+  Output(2,3,I)
+  Output(3,1,"HAS")
+  Output(4,1,"N=")
+  Output(4,3,A)
+  Output(5,1,"POINTS")
+  Pause 
+  
+  "DISPLAY CENTER OF CLUSTER"
+  ClrHome
+  Output(1,1,"CENTER OF")
+  Output(2,1,"CLUSTER")
+  Output(3,1,"C=")
+  Output(3,3,I)
+  Output(5,1,"X=")
+  Output(5,3,[B](I,1))
+  Output(6,1,"Y=")
+  Output(6,3,[B](I,2))
+  Pause 
+End
+
+
+For(I,1,Q,1)
+  For(J,1,P,1)
+    "CALC DIST FROM POINT TO CENTER"
+    √(([B](I,1)-[A](J,1))^2+([B](I,2)-[A](J,2))^2)→[C](J,I)
+    
+    "DISPLAY DISTANCE FROM POINT TO CENTER"
+    ClrHome
+    Output(1,1,"DISTANCE")
+    Output(2,1,"FROM POINT")
+    Output(3,1,"X=")
+    Output(3,3,[A](J,1))
+    Output(4,1,"Y=")
+    Output(4,3,[A](J,2))
+    Output(5,1,"TO CENTER")
+    Output(6,1,"X=")
+    Output(6,3,[B](I,1))
+    Output(7,1,"Y=")
+    Output(7,3,[B](I,2))
+    Output(8,1,"DIST=")
+    Output(8,6,[C](J,I))
+    Pause 
+  End
+End
+
+"FIND MIN CENTER DIST FOR EACH POINT"
+For(I,1,P,1)
+  1ᴇ99→M
+  0→K
+  For(J,1,Q,1)
+    If [C](I,J)<M:Then
+      [C](I,J)→M
+      J→K
+    End
+  End
+  
+  "DISPLAY MIN DIST CLUSTER"
+  ClrHome
+  Output(1,1,"POINT")
+  Output(2,1,"X=")
+  Output(2,3,[A](I,1))
+  Output(3,1,"Y=")
+  Output(3,3,[A](I,2))
+  Output(4,1,"IS CLOSER TO")
+  Output(5,1,"CLUSTER")
+  Output(6,1,"C=")
+  Output(6,3,K)
+  Output(7,1,"DIST=")
+  Output(7,6,M)
+  Pause 
+  
+  "ASSIGN POINT TO NEW CLUSTER"
+  K→ʟNEWC(I)
+End
+
+"CHECK IF ANY POINT WAS REASSIGNED"
+"FLAG"
+0→F
+For(I,1,P,1)
+  If ʟCLUS(I)≠ʟNEWC(I):Then
+    1→F
+    
+    "DISPLAY CHANGE"
+    ClrHome
+    Output(1,1,"POINT")
+    Output(2,1,"X=")
+    Output(2,3,[A](I,1))
+    Output(3,1,"Y=")
+    Output(3,3,[A](I,2))
+    Output(4,1,"FROM")
+    Output(5,1,"CLUSTER")
+    Output(6,1,"C=")
+    Output(6,3,ʟCLUS(I))
+    Output(7,1,"TO")
+    Output(8,1,"C=")
+    Output(8,3,ʟNEWC(I))
+    Pause 
+  End
+End
+
+If F=1:Then
+  For(I,1,P,1)
+    ʟNEWC(I)→ʟCLUS(I)
+  End
+  
+  Goto 0
+End
+
+"CLEAN UP"
+DelVar ʟCLUS
+DelVar ʟCENT
+
+ClrHome

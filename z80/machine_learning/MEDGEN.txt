@@ -1,0 +1,212 @@
+"MEDGEN ALGO"
+ClrHome
+Output(1,1,"PERFORM ATTR")
+Output(2,1,"ORIENTED")
+Output(3,1,"INDUCTION BY")
+Output(4,1,"GENERALIZATION")
+Pause 
+
+ClrHome
+Output(1,1,"PERFORM ATTR")
+Output(2,1,"ORIENTED")
+Output(3,1,"INDUCTION BY")
+Output(4,1,"COUNTING THE")
+Output(5,1,"OCCURENCES OF")
+Output(6,1,"RECORDS")
+Pause 
+
+ClrHome
+Input "NUM FEATURES?",F
+Input "NUM RECORDS?",R
+
+{R,F+1+1}→dim([A])
+
+"DATA COLLECTION"
+For(I,1,R,1)
+  ClrHome
+  Output(1,1,"ENTER DATA")
+  Output(2,1,"FOR RECORD")
+  Output(3,1,"TYPE")
+  Output(4,1,"R=")
+  Output(4,3,I)
+  Pause 
+  
+  For(J,1,F,1)
+    "GET FIELDS FOR RECORD"
+    ClrHome
+    Output(1,1,"ENTER FIELD")
+    Output(2,1,"F=")
+    Output(2,3,J)
+    Pause 
+    
+    ClrHome
+    Prompt F
+    F→[A](I,J)
+  End
+  
+  "GET LABEL FOR RECORD"
+  ClrHome
+  Output(1,1,"ENTER LABEL")
+  Output(2,1,"FOR RECORD")
+  Output(3,1,"TYPE")
+  Output(4,1,"R=")
+  Output(4,3,I)
+  Pause 
+  
+  ClrHome
+  Prompt L
+  L→[A](I,F+1)
+  
+  "GET OCCURENCES FOR RECORD"
+  ClrHome
+  Output(1,1,"ENTER NUMBER")
+  Output(2,1,"OF OCCURENCES")
+  Output(3,1,"FOR RECORD")
+  Output(4,1,"R=")
+  Output(4,3,I)
+  Pause 
+  
+  ClrHome
+  Prompt O
+  O→[A](I,F+2)
+End
+
+"RELEVENCE ANALYSIS"
+"CALC INFO"
+ClrHome
+Input "NUM OF LABELS?",L
+
+SetUpEditor ʟINFO
+L→dim(ʟINFO)
+For(I,1,L,1)
+  0→ʟINFO(I)
+End
+
+"FIND HOW MUCH IN EACH LABEL"
+For(I,1,R,1)
+ ʟINFO([A](I,C+1))+1→ʟINFO([A](I,C+1))
+End
+
+"DISPLAY THE NUMBER OF OCCURENCES"
+For(I,1,C,1)
+  ClrHome
+  Output(1,1,"NUMBER OF")
+  Output(2,1,"OCCURENCES")
+  Output(3,1,"FOR LABEL")
+  Output(4,1,"L=")
+  Output(4,3,I)
+  Output(6,1,"N=")
+  Output(6,3,ʟINFO(I))
+  Pause 
+End
+
+"CALC TOTAL ITEMS"
+sum(ʟINFO)→T
+
+"RELEVENCE ANALYSIS"
+"CALC INFO"
+0→Z
+For(I,1,L,1)
+  If ʟINFO(I)≠0:Then
+    Z-(ʟINFO(I)/T)*log(ʟINFO(I)/T,2)→Z
+  End
+End
+
+ClrHome
+Disp "INFO",Z
+
+"COMPUTES ENTROPY"
+For(K,1,C)
+  {C,L+1}→dim([B])
+
+  "TOTAL ITEMS"
+  0→T
+
+  For(I,1,C,1)
+    ClrHome
+    Output(1,1,"ENTER INFO")
+    Output(2,1,"FOR CLASS")
+    Output(3,1,I)
+    Pause 
+  
+    "TOTAL ITEMS FOR CLASS"
+    0→A
+  
+    For(J,1,L,1)
+      ClrHome
+      Output(1,1,"ENTER NUMBER")
+      Output(2,1,"OF LABEL")
+      Output(3,1,J)
+      Pause 
+  
+      "GET AMOUNT IN LABEL"
+      ClrHome
+      Prompt X
+      X→[B](I,J)
+    
+      "ADD ITEMS TO TOTAL"
+      T+X→T
+      A+X→A
+    End
+  
+    "CALC I FORMULA"
+    0→G
+    For(J,1,L,1)
+      If [B](I,J)≠0:Then
+        G-([B](I,J)/A)*log([B](I,J)/A,2)→G
+      End
+    End
+    G→[B](I,L+1)
+  
+    ClrHome
+    Output(1,1,"CLASS")
+    Output(2,1,I)
+    Output(3,1,"INFO")
+    Output(4,1,G)
+    Pause 
+  End
+
+  "CALC ENTROP"
+  0→S
+  For(I,1,C,1)
+    0→A
+    For(J,1,L,1)
+      A+[A](I,J)→A
+    End
+    S+(A/T)*[A](I,L+1)→S
+  End
+
+  ClrHome
+  Disp "ENTROPY",S
+  
+  "CALC UNCERTAINTY"
+  ClrHome
+  Output(1,1,"INFO OF PARENT?")
+  Pause 
+
+  ClrHome
+  Prompt I
+
+  ClrHome
+  Output(1,1,"ENTROP OF CHILD?")
+  Pause 
+
+  ClrHome
+  Prompt E
+
+  ClrHome
+  (I-E)/I→U
+  Disp "UNCERTAINTY",U
+End
+
+ClrHome
+Input "MIN UNCERT?",U
+
+"CHECK WHICH FEATURES UNDER U"
+For(I,1,F,1)
+End
+
+"CLEAN UP"
+DelVar ʟINFO
+
+ClrHome

@@ -23,7 +23,7 @@ sum(ʟINFO)→T
 0→Z
 For(I,1,C,1)
   If ʟINFO(I)≠0:Then
-  Z-(ʟINFO(I)/T)*log(ʟINFO(I)/T,2)→Z
+    Z-(ʟINFO(I)/T)*log(ʟINFO(I)/T,2)→Z
   End
 End
 

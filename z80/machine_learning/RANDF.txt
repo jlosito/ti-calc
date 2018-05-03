@@ -1,0 +1,154 @@
+"RANDOM FOREST"
+ClrHome
+
+Input "NUM RECORDS?",R
+Input "TOTAL FEATURES?",F
+{R,F+1}→dim([A])
+
+Input "NUM LABELS?",C
+SetUpEditor ʟLAB
+C→dim(ʟLAB)
+"INIT COUNTERS"
+For(I,1,C,1)
+  0→ʟLAB(I)
+End
+
+"GET TRAINING DATA"
+For(I,1,R,1)
+  ClrHome
+  Disp "RECORD",I
+  
+  "GET FEATURE DATA"
+  For(J,1,F,1)
+    Prompt X
+    X→[A](I,J)
+  End
+  
+  "GET LABEL DATA"
+  Prompt L
+  L→ʟREC(I)
+  
+  "INC COUNTER OF LABEL"
+  ʟLAB([A](I,F+1))+1→ʟLAB([A](I,F+1))
+End
+
+"CALC GINI IMPURITY"
+1→G
+For(I,1,C,1)
+  G-(ʟLAB(I)/R)^2→G
+End
+
+"DISPLAY GINI IMPURITY OF PARENT"
+ClrHome
+Disp "GINI IMPURITY",G
+Pause 
+
+"CALC NUM OF FEATURES TO SPLIT"
+"ROUND DOWN"
+int(√(F))→F
+ClrHome
+Disp "RANDOMLY SELECT",F
+
+SetUpEditor ʟFEAT
+F→dim(ʟFEAT)
+SetUpEditor ʟCAT
+F→dim(ʟCAT)
+SetUpEditor ʟCLASS
+F→dim(ʟCLASS)
+
+For(I,1,F,1)
+  Input "FEATURE?",X
+  X→ʟFEAT(I)
+  
+  ClrHome
+  Output(1,1,"IS FEATURE")
+  Output(2,1,"F=")
+  Output(2,3,ʟFEAT(I))
+  Output(3,1,"CATEGORICAL")
+  Output(4,1,"ENTER 1")
+  Output(5,1,"OR NUMERICAL")
+  Output(6,1,"ENTER 2")
+  Pause 
+  
+  ClrHome
+  Prompt X
+  X→ʟCAT(I)
+  
+  ClrHome
+  Output(1,1,"ENTER NUMBER")
+  Output(2,1,"OF CLASSES")
+  Output(3,1,"WITHIN FEATURE")
+  Output(4,1,"F=")
+  Output(4,3,ʟFEAT(I))
+  
+  ClrHome
+  Prompt X
+  X→ʟCLASS(I)
+End
+
+For(I,1,F,1)
+  "CALCULATE NUM OF SPLITS FOR FEATURE"
+  If ʟCAT(I)=1:Then
+    2^(ʟCLASS(I)-1)-1→S
+  Else
+    ʟCLASS(I)-1→S
+  End
+  
+  "DISPLAY NUM OF SPLITS"
+  ClrHome
+  Disp "NUM SPLITS",S
+  Pause 
+  
+  "GINI IMPURITY OF SPLIT"
+  SetUpEditor ʟSPLIT
+  S→dim(ʟSPLIT)
+  
+  For(J,1,S,1)
+    ClrHome
+    Disp "SPLIT",J
+    
+    Input "NUM RECS LEFT?",X
+    "LEFT CHILD"
+    {X,2}→[B]
+    
+    "GET DATA FOR LEFT CHILD"
+    For(K,1,X,1)
+      Prompt Y
+      Prompt L
+      Y→[B](K,1)
+      L→[B](K,2)
+    End
+    
+    Input "NUM RECS RIGHT?",X
+    "RIGHT CHILD"
+    {X,2}→[C]
+    
+    "GET DATA FOR RIGHT CHILD"
+    For(K,1,X,1)
+      Prompt Y
+      Prompt L
+      Y→[C](K,1)
+      L→[C](K,2)
+    End
+  End
+  
+  "FIND MAX GINI IMPURITY OF SPLITS"
+  0→P
+  0→M
+  For(J,1,S,1)
+    If ʟSPLIT(J)>M:Then
+      ʟSPLIT(J)→M
+      J→P
+    End
+  End
+  
+  "DISPLAY MAX GINI IMPURITY OF SPLITS"
+  ClrHome
+  Disp "MAX SPLIT",M
+  Disp "POSITION",P
+End
+
+"CLEAN UP"
+DelVar ʟLAB
+DelVar ʟFEAT
+DelVar ʟCAT

@@ -1,0 +1,47 @@
+"GINI IMPURITY"
+ClrHome
+
+Input "NUM FEATURES?",F
+Input "NUM RECORDS?",R
+
+{R,F+1}→dim([A])
+
+"GET TRAINING DATA"
+For(I,1,R,1)
+  ClrHome
+  Disp "ENTER RECORD",I
+  For(J,1,F,1)
+    Prompt X
+    X→[A](I,J)
+  End
+  Input "LABEL?",L
+  L→[A](I,F+1)
+End
+
+ClrHome
+Input "NUM LABELS?",C
+
+SetUpEditor ʟLAB
+C→dim(ʟLAB)
+
+"INIT COUTNERS"
+For(I,1,C,1)
+  0→ʟLAB(I)
+End
+For(I,1,R,1)
+  ʟLAB([A](I,F+1))+1→ʟLAB([A](I,F+1))
+End
+
+"CALC GINI"
+1→G
+For(I,1,C,1)
+  G-(ʟLAB(I)/R)^2→G
+End
+
+"DISPLAY GINI IMPURITY"
+ClrHome
+Disp "GINI IMPURITY",G
+Pause 
+
+"CLEAN UP"
+DelVar ʟLABEL

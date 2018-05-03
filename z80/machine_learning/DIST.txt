@@ -1,0 +1,43 @@
+"DISTANCE"
+ClrHome
+
+Input "NUM PTS?",N
+{N,2}→dim([A])
+
+"GET DATA"
+For(I,1,N,1)
+  ClrHome
+  Disp "POINT",I
+  Prompt X
+  Prompt Y
+  X→[A](I,1)
+  Y→[A](I,2)
+End
+
+{N,N}→dim([D])
+
+"CALC DIST TO EACH POINT"
+For(I,1,N,1)
+  For(J,1,N,1)
+    √(([A](I,1)-[A](J,1))^2+([A](I,2)-[A](J,2))^2)→D
+    D→[D](I,J)
+    
+    "DISPLAY DISTANCES"
+    ClrHome
+    Output(1,1,"FROM P=")
+    Output(1,8,I)
+    Output(2,1,"X=")
+    Output(2,3,[A](I,1))
+    Output(3,1"Y=")
+    Output(3,3,[A](I,2))
+    Output(4,1,"TO P=")
+    Output(4,6,J)
+    Output(5,1,"X=")
+    Output(5,3,[A](J,1))
+    Output(6,1,"Y=")
+    Output(6,3,[A](J,2))
+    Output(7,1,"D=")
+    Output(7,3,[D](I,J))
+    Pause 
+  End
+End

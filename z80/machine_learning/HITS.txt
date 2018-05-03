@@ -1,0 +1,137 @@
+"HITS"
+ClrHome
+Input "NUM PAGES?",N
+
+"ADJACENCY MATRIX"
+{N,N}→dim([A])
+
+
+ClrHome
+Output(1,1,"ENTER")
+Output(2,1,"ADJACENCY")
+Output(3,1,"MATRIX")
+Pause 
+For(I,1,N,1)
+  ClrHome
+  Disp "FROM",I
+  For(J,1,N,1)
+    Disp "TO",J
+    Prompt E
+    E→[A](I,J)
+  End
+End
+
+[A]ᵀ→[B]
+
+"AUTHORITY SCORES"
+SetUpEditor ʟAUTH
+N→dim(ʟAUTH)
+SetUpEditor ʟNEWA
+N→dim(ʟNEWA)
+
+"HUB SCORES"
+SetUpEditor ʟHUB
+N→dim(ʟHUB)
+SetUpEditor ʟNEWH
+N→dim(ʟNEWH)
+
+"ITERATION COUTNER"
+0→C
+
+"INIT AUTH AND HUB SCORES"
+For(I,1,N,1)
+  1→ʟAUTH(I)
+  1→ʟHUB(I)
+End
+
+"DISPLAY SCORES"
+ClrHome
+Disp "ITERATION",C
+Pause 
+
+"DISPLAY AUTH SCORES"
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,"PAGE")
+  Output(2,1,"P=")
+  Output(2,3,I)
+  Output(3,1,"AUTH SCORE")
+  Output(4,1,"A=")
+  Output(4,3,ʟAUTH(I))
+  Pause 
+End
+
+"DISPLAY HUB SCORES"
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,"PAGE")
+  Output(2,1,"P=")
+  Output(2,3,I)
+  Output(3,1,"HUB SCORE")
+  Output(4,1,"H=")
+  Output(4,3,ʟHUB(I))
+  Pause 
+End
+
+C+1→C
+
+Lbl 0
+ClrHome
+Disp "ITERATION",C
+Pause 
+
+"CALC NEW SCORES"
+For(I,1,N,1)
+  "CALC NEW AUTH SCORES"
+  0→S
+  For(J,1,N,1)
+    S+(ʟHUB(J)*[B](I,J))→S
+  End
+  S→ʟNEWA(I)
+  
+  "CALC NEW HUB SCORES"
+  0→S
+  For(J,1,N,1)
+    S+(ʟAUTH(J)*[A](I,J))→S
+  End
+  S→ʟNEWH(I)
+End
+
+"DISPLAY NEW AUTHORITY SCORES"
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,"PAGE")
+  Output(2,1,"P=")
+  Output(2,3,I)
+  Output(3,1,"AUTH SCORE")
+  Output(4,1,"A=")
+  Output(4,3,ʟNEWA(I))
+  Pause 
+End
+
+"DISPLAY NEW HUB SCORES"
+For(I,1,N,1)
+  ClrHome
+  Output(1,1,"PAGE")
+  Output(2,1,"P=")
+  Output(2,3,I)
+  Output(3,1,"HUB SCORE")
+  Output(4,1,"H=")
+  Output(4,3,ʟNEWH(I))
+  Pause 
+End
+
+"COPY OVER SCORES"
+For(I,1,N,1)
+  ʟNEWA(I)→ʟAUTH(I)
+  ʟNEWH(I)→ʟHUB(I)
+End
+
+C+1→C
+Goto 0
+
+"CLEAN UP"
+DelVar ʟAUTH
+DelVar ʟHUB
+DelVar ʟNEWA
+DelVar ʟNEWH

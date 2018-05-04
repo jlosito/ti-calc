@@ -1,0 +1,143 @@
+"GRAPH CLUSTERING"
+ClrHome
+
+Input "NUM NODES?",N
+
+"ADJACENCY MATRIX"
+{N,N}→dim([A])
+
+"GET GRAPH ADJACENCY MATRIX"
+ClrHome
+Output(1,1,"ENTER")
+Output(2,1,"ADJACENCY")
+Output(3,1,"MATRIX")
+Pause 
+For(I,1,N,1)
+  ClrHome
+  Disp "FROM",I
+  For(J,1,N,1)
+    Disp "TO",J
+    Prompt E
+    E→[A](I,J)
+  End
+End
+
+Lbl 0
+
+ClrHome
+Input "NUM NODES IN S?",S
+SetUpEditor ʟS
+S→dim(ʟS)
+
+Input "NUM NODES IN T?",T
+SetUpEditor ʟT
+T→dim(ʟT)
+
+"CHECK IF S+T=N"
+If S+T≠N:Then
+  ClrHome
+  Output(1,1,"S UNION T")
+  Output(2,1,"DOES NOT")
+  Output(3,1,"EQUAL V")
+  Pause 
+  Goto 0
+End
+
+"GET NODES IN S"
+ClrHome
+Output(1,1,"ENTER NODES")
+Output(2,1,"IN CLUSTER")
+Output(3,1,"S")
+Pause 
+For(I,1,S,1)
+  Disp "NODE",I
+  Prompt V
+  V→ʟS(I)
+End
+
+"GET NODES IN T"
+ClrHome
+Output(1,1,"ENTER NODES")
+Output(2,1,"IN CLUSTER")
+Output(3,1,"T")
+Pause 
+For(I,1,T,1)
+  Disp "NODE",I
+  Prompt V
+  V→ʟT(I)
+End
+
+"CHECK IF S UNION T IS EMPTY"
+For(I,1,S,1)
+  For(J,1,T,1)
+    If ʟS(I)=ʟT(J):Then
+      "BAD CUT"
+      ClrHome
+      Output(1,1,"BAD CUT")
+      Output(2,1,"NODE")
+      Output(3,1,"N=")
+      Output(3,3,ʟS(I))
+      Output(4,1,"IS IN")
+      Output(5,1,"S AND T")
+      Pause 
+      Goto 0
+    End
+  End
+End
+
+"FIND CUT SET AND SIZE"
+0→C
+ClrHome
+Output(1,1,"CUT SET")
+Pause 
+For(I,1,S,1)
+  For(J,1,T,1)
+    If [A](ʟS(I),ʟT(J))=1:Then
+      ClrHome
+      Output(1,1,ʟS(I))
+      Output(2,1,",")
+      Output(3,1,ʟT(J))
+      Pause 
+      C+1→C
+    End
+  End
+End
+
+"DISPLAY CUT SIZE"
+ClrHome
+Disp "CUT SIZE",C
+Pause 
+
+"FIND MIN OF TWO SETS"
+0→M
+If S<T:Then
+  S→M
+Else
+  T→M
+End
+
+"CALC SPARSITY"
+C/M→Y
+
+"DISPLAY SPARSITY"
+ClrHome
+Output(1,1,"SPARSITY")
+Output(2,1,"S=")
+Output(2,3,Y)
+Pause 
+
+ClrHome
+Output(1,1,"MAKE")
+Output(2,1,"ANOTHER")
+Output(3,1,"CUT?")
+Pause 
+
+ClrHome
+Input "1 YES 0 NO?",F
+If F=1:Then
+  Goto 0
+End
+
+"CLEAN UP"
+DelVar ʟS
+DelVar ʟT

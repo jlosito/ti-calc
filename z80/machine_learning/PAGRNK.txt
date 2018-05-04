@@ -1,0 +1,150 @@
+"PAGERANK"
+ClrHome
+Input "NUM PAGES?",N
+
+Lbl 0
+
+"ADJACENCY MATRIX"
+{N,N}→dim([A])
+
+"ENTER DATA"
+ClrHome
+Output(1,1,"ENTER")
+Output(2,1,"ADJACENCY")
+Output(3,1,"MATRIX")
+Pause 
+For(I,1,N,1)
+  ClrHome
+  Disp "FROM",I
+  For(J,1,N,1)
+    Disp "TO",J
+    Prompt E
+    E→[A](I,J)
+  End
+End
+
+"OUT DEGREE"
+SetUpEditor ʟOUTD
+N→dim(ʟOUTD)
+
+For(I,1,N,1)
+  "COUNT OF OUTGOING EDGES"
+  0→E
+  For(J,1,N,1)
+    E+[A](I,J)→E
+  End
+  
+  If E=0:Then
+    "FOUND DANGLING NODE"
+    ClrHome
+    Output(1,1,"REMOVE NODE")
+    Output(2,1,"N=")
+    Output(2,3,I)
+    Output(3,1,"FROM THE")
+    Output(4,1,"GRAPH")
+    Output(5,1,"ITS DANGLING")
+    Pause 
+    
+    N-1→N
+    Goto 0
+  End
+  
+  E→ʟOUTD(I)
+  
+  "DISPLAY OUTDEG OF NODE"
+  ClrHome
+  Output(1,1,"OUTDEGREE")
+  Output(2,1,"OF NODE")
+  Output(3,1,"N=")
+  Output(3,3,I)
+  Output(4,1,"D=")
+  Output(4,3,ʟOUTD(I))
+  Pause 
+End
+
+"IN DEGREE"
+SetUpEditor ʟIND
+N→dim(ʟIND)
+
+For(J,1,N,1)
+  0→E
+  For(I,1,N,1)
+    E+[A](I,J)→E
+  End
+  E→ʟIND(J)
+  
+  "DISPLAY INDEG OF NODE"
+  ClrHome
+  Output(1,1,"INDEGREE")
+  Output(2,1,"OF NODE")
+  Output(3,1,"N=")
+  Output(3,3,J)
+  Output(4,1,"D=")
+  Output(4,3,ʟIND(J))
+  Pause 
+End
+
+"GET DAMPING FACTOR"
+ClrHome
+Input "DAMPING?",D
+
+"PAGE RANK"
+SetUpEditor ʟPAGRK
+N→dim(ʟPAGRK)
+
+SetUpEditor ʟNEWRK
+N→dim(ʟNEWRK)
+
+"INIT PAGRNK"
+For(I,1,N,1)
+  1→ʟPAGRK(I)
+End
+
+"ITERATION COUNT"
+0→C
+
+"DISPLAY PAGE RANK"
+For(I,1,N,1)
+  ClrHome
+  Disp "ITERATION",C
+  Disp "NODE",I
+  Disp "PAGERANK",ʟPAGRK(I)
+  Pause 
+End
+
+C+1→C
+
+Lbl 1
+
+For(J,1,N,1)
+  0→R
+  For(I,1,N,1)
+    If [A](I,J)=1:Then
+      R+(ʟPAGRK(I)/ʟOUTD(I))→R
+    End
+  End
+  (1-D)+(R*D)→ʟNEWRK(J)
+End
+
+"DISPLAY NEW PAGE RANKS"
+For(I,1,N,1)
+  ClrHome
+  Disp "ITERATION",C
+  Disp "NODE",I
+  Disp "PAGERANK",ʟNEWRK(I)
+  Pause 
+End
+
+For(I,1,N,1)
+  ʟNEWRK(I)→ʟPAGRK(I)
+End
+
+C+1→C
+
+Goto 1
+
+"CLEAN UP"
+DelVar ʟPAGRK
+DelVar ʟNEWRK
+DelVar ʟIND
+DelVar ʟOUTD

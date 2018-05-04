@@ -1,0 +1,62 @@
+"EVALUATION FOR INFORMATION RETRIEVAL"
+ClrHome
+
+Input "NUM RELEVT?",V
+SetUpEditor ʟREL
+V→dim(ʟREL)
+
+Input "NUM RETR?",R
+SetUpEditor ʟRETR
+R→dim(ʟRETR)
+
+"GET SET RELEVANT"
+ClrHome
+Output(1,1,"ENTER")
+Output(2,1,"RELEVANT")
+Output(3,1,"SET")
+For(I,1,V,1)
+  ClrHome
+  Disp "N=",I
+  Prompt P
+  P→ʟREL(I)
+End
+
+"GET SET RETRIEVED"
+ClrHome
+Output(1,1,"ENTER")
+Output(2,1,"RETRIEVED")
+Output(3,1,"SET")
+For(I,1,R,1)
+  ClrHome
+  Disp "N=",I
+  Prompt P
+  P→ʟRETR(I)
+End
+
+"CALC PRECISION"
+0→U
+For(I,1,V,1)
+  For(J,1,R,1)
+    If ʟREL(I)=ʟRETR(J):Then
+      U+1→U
+    End
+  End
+End
+U/R→C
+
+"DISPLAY PRECISION"
+ClrHome
+Disp "PERCISION",C
+Pause 
+
+"CALC RECALL"
+U/V→C
+
+"DISPLAY RECALL"
+ClrHome
+Disp "RECALL",C
+Pause 
+
+"CLEAN UP"
+DelVar ʟREL
+DelVar ʟRETR

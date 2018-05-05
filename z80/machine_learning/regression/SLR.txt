@@ -1,8 +1,12 @@
 "SIMPLE LINEAR REGRESSION"
 ClrHome
 Input "NUM TRAINING?",D
+
+"X COORDINATES"
 SetUpEditor ʟX
 D→dim(ʟX)
+
+"Y COORDINATES"
 SetUpEditor ʟY
 D→dim(ʟY)
 
@@ -35,7 +39,6 @@ For(I,1,D,1)
   F+ʟX(I)*ʟY(I)→F
 End
 
-
 "DISPLAY ITER VALS"
 ClrHome
 Output(1,1,"ΣX=")
@@ -48,12 +51,13 @@ Output(4,1,"ΣYX=")
 Output(4,5,F)
 Pause 
 
-"DISPLAY REGRESS FORM"
+"DISPLAY REGRESS FORMULA"
 ClrHome
 Output(1,1,"DISPLAYING")
 Output(2,1,"REGRESION FORMS")
 Output(3,1,"WHERE D=DATA SIZE")
 Pause 
+
 "DISPLAY SLOPE FORM"
 ClrHome
 Output(1,1,"M=")
@@ -61,6 +65,7 @@ Output(2,1,"ΣYX-(ΣY*ΣX)/D")
 Output(3,1,"---------")
 Output(4,1,"ΣX^2-((ΣX)^2)/D)")
 Pause 
+
 "DISPLAY INTERCEPT"
 ClrHome
 Output(1,1,"B=")
@@ -83,6 +88,7 @@ Pause
 
 "TEST"
 Lbl 0
+
 ClrHome
 Input "TEST X=",T
 
@@ -97,4 +103,14 @@ Output(4,2,B)
 Output(5,1,"=")
 Output(5,2,M*T+B)
 Pause 
-Goto 0
+
+ClrHome
+Input "1 CONT?",W
+
+If W=1:Then
+  Goto 0
+End
+
+"CLEAN UP"
+DelVar ʟX
+DelVar ʟY

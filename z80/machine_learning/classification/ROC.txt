@@ -137,6 +137,7 @@ For(I,1,N,1)
   Pause 
   S+(ʟFPR(I)-ʟFPR(I+1))*ʟTPR(I)→S
 End
+
 ClrHome
 Output(1,1,"AREA")
 Output(2,1,"UNDER")
@@ -144,3 +145,9 @@ Output(3,1,"CURVE")
 Output(4,1,S)
 Pause 
 ClrHome
+
+"CLEAN UP"
+DelVar ʟLAB
+DelVar ʟDATA
+DelVar ʟFPR
+DelVar ʟTPR

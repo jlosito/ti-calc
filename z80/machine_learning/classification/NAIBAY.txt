@@ -125,7 +125,7 @@ End
 0→Z
 ClrHome
 Disp "PRESS KEY TO"
-Disp "CALC PROBS…"
+Disp "CALC PROBS"
 Pause 
 For(I,1,ʟDIM(F+1),1)
   "FOR EACH LABEL"

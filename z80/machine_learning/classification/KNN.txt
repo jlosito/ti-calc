@@ -131,3 +131,8 @@ Input "ANOTHER?",F
 If F≠0:Then
   Goto 1
 End
+
+"CLEAN UP"
+DelVar ʟCLASS
+DelVar ʟPOS
+DelVar ʟDIST

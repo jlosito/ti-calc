@@ -210,5 +210,6 @@ Output(4,1,"=")
 Output(4,2,Z)
 Pause 
 
+"CLEAN UP"
 DelVar ʟPTS
 ClrHome
